@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"SKILL ROUTING (mandatory): classify this prompt (UI, bug, database/auth/RLS, security/uploads, cleanup/review, deploy, new feature), invoke the matching skills from the Mandatory Skill Routing Protocol in CLAUDE.md BEFORE doing anything else, and start the reply with the badge [Auto-Skills Active: a + b] (or [Auto-Skills Active: none]).\""
+          }
+        ]
+      }
+    ]
+  }
+}

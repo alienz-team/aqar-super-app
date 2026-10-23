@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+.env
+.env*.local
+*.tsbuildinfo
+next-env.d.ts
+.playwright-mcp
+
+# Local-only tooling and platform state
+.claude/settings.local.json
+.vercel
+*.log
+.DS_Store
+coverage

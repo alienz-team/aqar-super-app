@@ -1,0 +1,185 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  CLIENT
+  OWNER
+  CONTRACTOR
+  ENGINEER
+  TECHNICIAN
+  SUPPLIER
+  ADMIN
+}
+
+enum ListingType {
+  SALE
+  RENT
+}
+
+enum RentCycle {
+  DAILY
+  MONTHLY
+  YEARLY
+  NONE
+}
+
+enum PropertyCategory {
+  APARTMENT
+  VILLA
+  LAND
+  COMMERCIAL
+  ISTIRAHA
+  CHALET
+  EVENT_HALL
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum ServiceCategory {
+  CONSTRUCTION_SKELETON
+  CONSTRUCTION_FINISHING
+  DESIGN_3D
+  SWIMMING_POOL_LANDSCAPE
+  SOLAR_ENERGY_WATER
+  SMART_HOME_SECURITY
+  MAINTENANCE_PLUMBING
+  MAINTENANCE_ELECTRICAL
+  MAINTENANCE_AC
+  MAINTENANCE_POOL
+}
+
+enum ServiceRequestStatus {
+  OPEN
+  QUOTED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum MaterialType {
+  IRON_TON
+  CEMENT_BAG
+  BRICKS_1000
+  SAND_LOAD
+  SOLAR_PANEL_KW
+}
+
+/// `id` matches the Supabase `auth.users.id` (uuid).
+model User {
+  id        String   @id @db.Uuid
+  email     String   @unique
+  fullName  String?
+  phone     String?
+  role      Role     @default(CLIENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  properties       Property[]       @relation("PropertyOwner")
+  bookings         Booking[]        @relation("BookingClient")
+  serviceRequests  ServiceRequest[] @relation("RequestClient")
+  assignedRequests ServiceRequest[] @relation("RequestProvider")
+}
+
+model Property {
+  id          String           @id @default(uuid()) @db.Uuid
+  title       String
+  description String
+  price       Decimal          @db.Decimal(14, 2)
+  areaSqm     Float
+  city        String
+  images      String[]
+  isVip       Boolean          @default(false)
+  listingType ListingType
+  rentCycle   RentCycle        @default(NONE)
+  category    PropertyCategory
+  /// Null for listings the admin team publishes directly.
+  ownerId     String?          @db.Uuid
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  owner    User?     @relation("PropertyOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  bookings Booking[]
+
+  @@index([listingType, category])
+  @@index([city])
+  @@index([ownerId])
+}
+
+model Booking {
+  id         String        @id @default(uuid()) @db.Uuid
+  propertyId String        @db.Uuid
+  clientId   String        @db.Uuid
+  startDate  DateTime
+  endDate    DateTime
+  totalPrice Decimal       @db.Decimal(14, 2)
+  status     BookingStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  client   User     @relation("BookingClient", fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([propertyId, startDate, endDate])
+  @@index([clientId])
+}
+
+model ServiceRequest {
+  id              String               @id @default(uuid()) @db.Uuid
+  serviceCategory ServiceCategory
+  description     String
+  city            String
+  preferredDate   DateTime?
+  status          ServiceRequestStatus @default(OPEN)
+  clientId        String               @db.Uuid
+  providerId      String?              @db.Uuid
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  client   User  @relation("RequestClient", fields: [clientId], references: [id], onDelete: Cascade)
+  provider User? @relation("RequestProvider", fields: [providerId], references: [id], onDelete: SetNull)
+
+  @@index([clientId])
+  @@index([providerId])
+  @@index([serviceCategory, status])
+}
+
+/// A construction, energy or maintenance service offered on the platform (the catalog, not a client request).
+model Service {
+  id            String             @id @default(uuid()) @db.Uuid
+  nameEn        String
+  nameAr        String
+  description   String
+  category      ServiceCategory
+  startingPrice Decimal            @db.Decimal(12, 2)
+  /// Technician services are booked directly; the rest collect quotes.
+  bookingMode   ServiceBookingMode @default(QUOTE)
+  isActive      Boolean            @default(true)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  @@index([category, isActive])
+}
+
+enum ServiceBookingMode {
+  QUOTE
+  TECHNICIAN
+}
+
+model MaterialPrice {
+  id           String       @id @default(uuid()) @db.Uuid
+  materialType MaterialType @unique
+  nameEn       String
+  nameAr       String
+  unitPrice    Decimal      @db.Decimal(12, 2)
+  updatedAt    DateTime     @updatedAt
+}

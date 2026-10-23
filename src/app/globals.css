@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Light: Engineering & Trust */
+:root {
+  --bg: #ffffff;
+  --surface: #f8fafc;
+  --surface-2: #eef2f7;
+  --ink: #0f172a;
+  --muted: #475569;
+  --line: #e2e8f0;
+  --brand: #1e3a8a;
+  --brand-ink: #ffffff;
+  --gold: #d4af37;
+  --gold-text: #8a6a0f;
+  --gold-line: rgb(138 106 15 / 0.28);
+  --up: #15803d;
+  --down: #b91c1c;
+  color-scheme: light;
+}
+
+/* Dark: Luxury & Real Estate */
+.dark {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --surface-2: #1c1c1c;
+  --ink: #ffffff;
+  --muted: #a3a3a3;
+  --line: #262626;
+  --brand: #d4af37;
+  --brand-ink: #0a0a0a;
+  --gold: #d4af37;
+  --gold-text: #d4af37;
+  --gold-line: rgb(212 175 55 / 0.24);
+  --up: #4ade80;
+  --down: #f87171;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-gold: var(--gold);
+  --color-gold-text: var(--gold-text);
+  --color-gold-line: var(--gold-line);
+  --color-up: var(--up);
+  --color-down: var(--down);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+}
+
+/* Latin first in English; Cairo / Amiri first in Arabic so mixed strings keep one voice. */
+:root {
+  --font-body: var(--font-jakarta), var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), var(--font-amiri), ui-serif, Georgia, serif;
+}
+:root:lang(ar) {
+  --font-body: var(--font-cairo), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-amiri), var(--font-playfair), ui-serif, serif;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "tnum" 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.6);
+  backdrop-filter: blur(2px);
+}
+
+dialog[open] {
+  animation: dialog-in 160ms ease-out;
+}
+
+@keyframes dialog-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Bourse board marquee: the one ambient motion on the site */
+@keyframes ticker-ltr {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+/* RTL tracks overflow to the left, so they scroll the other way. */
+@keyframes ticker-rtl {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+.ticker-track {
+  animation: ticker-ltr 40s linear infinite;
+}
+[dir="rtl"] .ticker-track {
+  animation-name: ticker-rtl;
+}
+.ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+  dialog[open] { animation: none; }
+}
+
+/* Brand: brushed-gold fill from the logo, same in both themes. */
+.gold-metal {
+  background: linear-gradient(135deg, #f4e3a1 0%, #d4af37 42%, #a8841f 100%);
+  color: #0a0a0a;
+}
+
+/* Blueprint grid lifted from the logo's construction lines. */
+.blueprint {
+  background-image:
+    linear-gradient(var(--gold-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--gold-line) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* The logo mark as a one-colour shape (takes currentColor), for watermarks in either theme. */
+.brand-mark {
+  background-color: currentColor;
+  mask: url("/brand/mark.png") center / contain no-repeat;
+}
+
+@keyframes mark-breathe {
+  from { opacity: 0.35; }
+  to { opacity: 1; }
+}
+.mark-breathe {
+  animation: mark-breathe 1.1s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mark-breathe { animation: none; }
+}
+
+/* Frosted panel for the bourse: reads as glass over the photo band in both themes. */
+.glass {
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
