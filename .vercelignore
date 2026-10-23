@@ -1,0 +1,9 @@
+# Never upload local secrets or build/test output with `vercel deploy`.
+.env
+.env.*
+!.env.example
+.next
+node_modules
+.playwright-mcp
+.claude/settings.local.json
+*.log

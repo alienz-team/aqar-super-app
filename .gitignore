@@ -13,3 +13,7 @@ next-env.d.ts
 *.log
 .DS_Store
 coverage
+
+# Any env file except the committed template
+.env*
+!.env.example
