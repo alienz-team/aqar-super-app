@@ -10,7 +10,8 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   const denied = (await searchParams).denied === "admin";
 
   // Scoped to this user's id from the verified session: never from the URL.
-  const [bookings, requests] = await Promise.all([
+  // A batch transaction shares the single pooled connection instead of competing for it.
+  const [bookings, requests] = await prisma.$transaction([
     prisma.booking.findMany({
       where: { clientId: viewer.id },
       orderBy: { startDate: "desc" },

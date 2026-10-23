@@ -86,7 +86,10 @@ export function listServices() {
 
 export function getOverview() {
   return load(async () => {
-    const [properties, forRent, vip, services, activeServices, openRequests, recent] = await Promise.all([
+    // One batch transaction, not Promise.all: with connection_limit=1 (needed behind Supabase's
+    // pooler) parallel queries queue for the single connection and hit the pool timeout. A batch
+    // runs them in order on one connection, and every count comes from the same snapshot.
+    const [properties, forRent, vip, services, activeServices, openRequests, recent] = await prisma.$transaction([
       prisma.property.count(),
       prisma.property.count({ where: { listingType: "RENT" } }),
       prisma.property.count({ where: { isVip: true } }),
