@@ -1,26 +1,26 @@
 import type { Metadata } from "next";
 import { CircleCheck, CircleDashed, LogOut } from "lucide-react";
-import { logout } from "@/app/admin/actions";
+import { signOut } from "@/actions/auth";
 import { PageHeader } from "@/components/admin/ui";
 import { buttonStyles } from "@/components/ui/primitives";
 import { isDatabaseConfigured } from "@/lib/admin/data";
 import { requireAdminPage } from "@/lib/auth/session";
-import { isAuthConfigured } from "@/lib/auth/token";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 export const metadata: Metadata = { title: "Settings" };
 
 export default async function AdminSettingsPage() {
-  await requireAdminPage();
+  const viewer = await requireAdminPage();
 
   // Only whether each value is set: secrets never leave the server.
   const checks = [
     { label: "Database connection", detail: "DATABASE_URL and DIRECT_URL", ok: isDatabaseConfigured() && Boolean(process.env.DIRECT_URL) },
-    { label: "Admin sign-in", detail: "ADMIN_PASSWORD and a 32+ character SESSION_SECRET", ok: isAuthConfigured() },
     {
-      label: "Supabase client",
-      detail: "NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY",
-      ok: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+      label: "Supabase Auth",
+      detail: "NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (or the legacy ANON_KEY)",
+      ok: isSupabaseConfigured(),
     },
+    { label: "Site URL for email links", detail: "NEXT_PUBLIC_SITE_URL", ok: Boolean(process.env.NEXT_PUBLIC_SITE_URL) },
   ];
 
   return (
@@ -56,8 +56,11 @@ export default async function AdminSettingsPage() {
         <h2 id="session-title" className="mb-4 font-serif text-2xl">
           Session
         </h2>
-        <p className="mb-4 text-sm text-muted">Admin sessions last 8 hours. Changing SESSION_SECRET signs everyone out.</p>
-        <form action={logout}>
+        <p className="mb-4 text-sm text-muted">
+          Signed in as <span className="font-medium text-ink">{viewer.email}</span> with the ADMIN role. Admins are promoted in the database; see
+          the setup notes in <code className="font-mono">.env.example</code>.
+        </p>
+        <form action={signOut}>
           <button type="submit" className={buttonStyles.secondary}>
             <LogOut className="size-4" aria-hidden />
             Sign out

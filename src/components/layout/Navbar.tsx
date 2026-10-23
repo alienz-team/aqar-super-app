@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { cn } from "@/lib/utils";
+import { AccountMenu } from "./AccountMenu";
 import { InstallAppButton } from "./InstallAppButton";
 import { Logo } from "./Logo";
 import { isActive, navItems } from "./nav-items";
@@ -46,6 +47,8 @@ export function Navbar() {
           <InstallAppButton />
           <ThemeToggle />
           <LanguageToggle />
+          <span aria-hidden className="mx-1 hidden h-6 w-px bg-line sm:block" />
+          <AccountMenu />
         </div>
       </div>
     </header>

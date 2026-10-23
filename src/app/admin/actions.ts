@@ -1,12 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 import { isDatabaseConfigured } from "@/lib/admin/data";
 import { propertySchema, serviceSchema, type ActionResult } from "@/lib/admin/schemas";
-import { assertAdmin, endSession, isAdmin, passwordMatches, startSession } from "@/lib/auth/session";
-import { isAuthConfigured } from "@/lib/auth/token";
+import { assertAdmin } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
 const NO_DB: ActionResult = {
@@ -18,7 +16,7 @@ function invalid(error: z.ZodError): ActionResult {
   return { ok: false, error: "Some fields need fixing.", fieldErrors: z.flattenError(error).fieldErrors as Record<string, string[]> };
 }
 
-// Every action re-checks the session: Server Actions can be POSTed to directly.
+// Every action re-checks the signed-in user and their ADMIN role: Server Actions can be POSTed to directly.
 
 export async function createProperty(input: unknown): Promise<ActionResult> {
   await assertAdmin();
@@ -79,25 +77,4 @@ export async function createService(input: unknown): Promise<ActionResult> {
   revalidatePath("/admin");
   revalidatePath("/admin/services");
   return { ok: true };
-}
-
-export type LoginState = { error?: string };
-
-export async function login(_prev: LoginState, formData: FormData): Promise<LoginState> {
-  if (!isAuthConfigured()) {
-    return { error: "Admin sign-in is not set up. Add ADMIN_PASSWORD and a 32+ character SESSION_SECRET to .env." };
-  }
-  const password = formData.get("password");
-  if (typeof password !== "string" || !passwordMatches(password)) {
-    // Slows password guessing; a shared rate limiter belongs here once there is a store for it.
-    await new Promise((r) => setTimeout(r, 800));
-    return { error: "That password is not correct." };
-  }
-  await startSession();
-  redirect("/admin");
-}
-
-export async function logout() {
-  if (await isAdmin()) await endSession();
-  redirect("/admin/login");
 }

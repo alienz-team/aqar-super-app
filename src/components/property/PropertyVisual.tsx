@@ -32,7 +32,7 @@ export function PropertyVisual({ category, image, alt }: PropertyVisualProps) {
           alt={alt}
           fill
           sizes={SIZES}
-          quality={85}
+          quality={80}
           loader={unsplashLoader}
           className="object-cover transition-transform duration-[1200ms] ease-out motion-safe:group-hover:scale-[1.03]"
         />

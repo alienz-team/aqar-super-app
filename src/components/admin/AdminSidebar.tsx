@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Building2, ExternalLink, HardHat, LayoutDashboard, LogOut, Settings, type LucideIcon } from "lucide-react";
-import { logout } from "@/app/admin/actions";
+import { signOut } from "@/actions/auth";
 import { BrandTile } from "@/components/layout/Logo";
 import { ThemeToggle } from "@/components/layout/Toggles";
 import { cn } from "@/lib/utils";
@@ -72,7 +72,7 @@ export function AdminSidebar() {
           <ExternalLink className="size-4" aria-hidden />
           View site
         </Link>
-        <form action={logout}>
+        <form action={signOut}>
           <button
             type="submit"
             className="flex w-full items-center gap-3 rounded-sm px-3 py-2.5 text-sm text-white/65 transition-colors hover:bg-white/5 hover:text-white"

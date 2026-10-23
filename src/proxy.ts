@@ -1,18 +1,26 @@
-import { NextResponse, type NextRequest } from "next/server";
-import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth/token";
+import type { NextRequest } from "next/server";
+import { redirectWithSession, updateSession } from "@/lib/supabase/middleware";
 
 /**
- * Optimistic gate for /admin: bounces signed-out visitors before any rendering.
- * Pages and Server Actions still verify the session themselves (src/lib/auth/session.ts).
+ * Next.js 16 renamed middleware.ts to proxy.ts. This refreshes the Supabase session on
+ * every page request and turns signed-out visitors away from /admin and /account.
+ * It is an optimistic gate: the pages and Server Actions check the user (and the ADMIN
+ * role, read from the database) themselves.
  */
 export async function proxy(request: NextRequest) {
-  if (request.nextUrl.pathname === "/admin/login") return NextResponse.next();
+  const { response, userId } = await updateSession(request);
+  const { pathname, search } = request.nextUrl;
 
-  const valid = await verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value);
-  if (!valid) return NextResponse.redirect(new URL("/admin/login", request.url));
-  return NextResponse.next();
+  const needsUser = pathname === "/admin" || pathname.startsWith("/admin/") || pathname === "/account";
+  if (needsUser && !userId) {
+    const login = new URL("/login", request.url);
+    login.searchParams.set("next", pathname + search);
+    return redirectWithSession(response, login);
+  }
+  return response;
 }
 
 export const config = {
-  matcher: ["/admin", "/admin/:path*"],
+  // Every route except static assets, images, the service worker and the manifest.
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|sw.js|manifest.webmanifest|icons/|brand/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)"],
 };
