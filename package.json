@@ -9,7 +9,8 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "db:secure": "prisma db execute --file prisma/sql/secure-public-tables.sql --schema prisma/schema.prisma"
+    "db:secure": "prisma db execute --file prisma/sql/secure-public-tables.sql --schema prisma/schema.prisma",
+    "db:seed": "node --env-file=.env scripts/seed-properties.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.2",

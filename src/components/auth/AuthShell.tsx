@@ -1,15 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Logo } from "@/components/layout/Logo";
 import { LanguageToggle, ThemeToggle } from "@/components/layout/Toggles";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { Crossfade } from "@/components/ui/Crossfade";
 import { SLOW_EASE } from "@/components/ui/motion";
-import { heroSlides } from "@/lib/mock-data";
-import { unsplashLoader } from "@/lib/unsplash-loader";
-
-const photo = heroSlides.find((s) => s.id === "villa")?.image ?? heroSlides[0].image;
+import { sectionImages } from "@/lib/mock-data";
 
 export function AuthShell({ children }: { children: React.ReactNode }) {
   const { t } = useLanguage();
@@ -17,7 +14,7 @@ export function AuthShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative isolate flex min-h-dvh flex-col">
       <div aria-hidden className="absolute inset-0 -z-10 bg-black">
-        <Image src={photo} alt="" fill priority sizes="100vw" loader={unsplashLoader} className="object-cover" />
+        <Crossfade images={sectionImages.auth} sizes="100vw" priority />
         <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/0.85),rgb(0_0_0/0.35)_60%,rgb(0_0_0/0.55))] lg:bg-[linear-gradient(to_right,rgb(0_0_0/0.75),rgb(0_0_0/0.25))] rtl:lg:bg-[linear-gradient(to_left,rgb(0_0_0/0.75),rgb(0_0_0/0.25))]" />
       </div>
 

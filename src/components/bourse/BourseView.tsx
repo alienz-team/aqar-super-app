@@ -1,15 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { Crossfade } from "@/components/ui/Crossfade";
 import { Reveal, TextReveal } from "@/components/ui/motion";
-import { heroSlides } from "@/lib/mock-data";
-import { unsplashLoader } from "@/lib/unsplash-loader";
+import { sectionImages } from "@/lib/mock-data";
 import { useLivePrices } from "@/lib/use-live-prices";
 import { BourseTable } from "./BourseTable";
 import { CostCalculator } from "./CostCalculator";
-
-const bandImage = heroSlides.find((s) => s.id === "construction")?.image ?? heroSlides[0].image;
 
 export function BourseView() {
   const { t, lang } = useLanguage();
@@ -20,7 +17,7 @@ export function BourseView() {
     <div className="relative isolate">
       {/* Site photo that dissolves into the page colour; the price board floats over it as glass. */}
       <div aria-hidden className="absolute inset-x-0 top-0 -z-10 h-[36rem] overflow-hidden bg-black">
-        <Image src={bandImage} alt="" fill priority sizes="100vw" loader={unsplashLoader} className="object-cover" />
+        <Crossfade images={sectionImages.bourse} sizes="100vw" priority />
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgb(0_0_0/0.6),rgb(0_0_0/0.4)_45%,var(--bg))]" />
       </div>
 

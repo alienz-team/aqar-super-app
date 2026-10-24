@@ -1,20 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { Crossfade } from "@/components/ui/Crossfade";
 import { Reveal, SLOW_EASE, TextReveal } from "@/components/ui/motion";
 import { buttonStyles } from "@/components/ui/primitives";
-import { heroSlides, serviceSectors } from "@/lib/mock-data";
+import { sectionImages, serviceSectors } from "@/lib/mock-data";
 import type { ServiceSector, ServiceSectorId } from "@/lib/types";
-import { unsplashLoader } from "@/lib/unsplash-loader";
 import { cn, formatNumber, formatPrice } from "@/lib/utils";
 import { ServiceRequestModal } from "./ServiceRequestModal";
-
-const introImage = heroSlides.find((s) => s.id === "villa")?.image ?? heroSlides[0].image;
 
 export function ServicesView({ initialSector }: { initialSector?: ServiceSectorId }) {
   const [selected, setSelected] = useState<ServiceSector | null>(null);
@@ -62,7 +59,7 @@ function Intro() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 2.4, ease: SLOW_EASE }}
         >
-          <Image src={introImage} alt="" fill priority sizes="100vw" loader={unsplashLoader} className="object-cover" />
+          <Crossfade images={sectionImages.servicesIntro} sizes="100vw" priority />
         </motion.div>
         <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/0.8),rgb(0_0_0/0.2)_60%,rgb(0_0_0/0.35))]" />
       </motion.div>
@@ -154,14 +151,7 @@ function SplitChapter({ sector, onRequest, flip }: ChapterProps & { flip: boolea
             viewport={{ once: true, margin: "-10% 0px" }}
             transition={{ duration: 2.2, ease: SLOW_EASE }}
           >
-            <Image
-              src={sector.image}
-              alt={copy.name}
-              fill
-              sizes="(min-width: 1024px) 58vw, 100vw"
-              loader={unsplashLoader}
-              className="object-cover"
-            />
+            <Crossfade images={sector.images} alt={copy.name} sizes="(min-width: 1024px) 58vw, 100vw" />
           </motion.div>
         </div>
 
@@ -203,7 +193,7 @@ function FullBleedChapter({ sector, onRequest }: ChapterProps) {
       className="relative isolate flex min-h-[92svh] scroll-mt-16 items-end overflow-hidden"
     >
       <motion.div aria-hidden className="absolute -inset-y-[10%] inset-x-0 -z-10 bg-black" style={{ y }}>
-        <Image src={sector.image} alt="" fill sizes="100vw" loader={unsplashLoader} className="object-cover" />
+        <Crossfade images={sector.images} sizes="100vw" />
         <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/0.85),rgb(0_0_0/0.15)_65%)]" />
       </motion.div>
 

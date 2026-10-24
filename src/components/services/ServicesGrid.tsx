@@ -1,15 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { Crossfade } from "@/components/ui/Crossfade";
 import { buttonStyles } from "@/components/ui/primitives";
 import { interpolate } from "@/dictionaries";
 import { serviceSectors } from "@/lib/mock-data";
 import type { ServiceSector, ServiceSectorId } from "@/lib/types";
 import { cn, formatNumber, formatPrice } from "@/lib/utils";
-import { unsplashLoader } from "@/lib/unsplash-loader";
 import { sectorIcons } from "./sector-icons";
 import { ServiceRequestModal } from "./ServiceRequestModal";
 
@@ -36,20 +35,13 @@ export function ServicesGrid({ variant, initialSector }: ServicesGridProps) {
   return (
     <>
       <ul className="grid gap-px overflow-hidden rounded-sm border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-        {serviceSectors.map((sector) => {
+        {serviceSectors.map((sector, index) => {
           const Icon = sectorIcons[sector.id];
           const copy = t.services.sectors[sector.id];
           return (
             <li key={sector.id} className="flex flex-col bg-bg">
               <div className="relative aspect-[16/9] overflow-hidden border-b border-gold-line bg-surface-2">
-                <Image
-                  src={sector.image}
-                  alt={copy.name}
-                  fill
-                  sizes={SIZES}
-                  loader={unsplashLoader}
-                  className="object-cover"
-                />
+                <Crossfade images={sector.images} alt={copy.name} sizes={SIZES} offsetMs={index * 700} />
                 <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
                 <span className="absolute bottom-3 start-3 flex size-10 items-center justify-center rounded-sm border border-gold/50 bg-black/60 backdrop-blur-sm">
                   <Icon className="size-5 text-gold" strokeWidth={1.75} aria-hidden />

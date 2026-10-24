@@ -51,11 +51,11 @@ export interface ServiceSector {
   startingPrice: number;
   providers: number;
   mode: "quote" | "technician";
-  /** Unsplash cover photo for the sector card. */
-  image: string;
+  /** Unsplash photos the sector card and chapter cycle through (3-4, no people). */
+  images: string[];
 }
 
-export type HeroSlideId = "villa" | "construction" | "interior" | "landscape" | "pools" | "maintenance";
+export type HeroSlideId = "villa" | "interior" | "pools" | "architecture" | "construction" | "solar" | "landscape";
 
 export interface HeroSlide {
   id: HeroSlideId;

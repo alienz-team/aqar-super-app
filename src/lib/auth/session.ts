@@ -54,9 +54,12 @@ export const getViewer = cache(async (): Promise<Viewer | null> => {
 
   try {
     const meta = (claims.user_metadata ?? {}) as { full_name?: string; phone?: string };
-    // Covers accounts whose profile insert failed at sign-up. Metadata only seeds the
-    // display name and phone; it is user-editable, so it never decides the role.
-    const user = await ensureProfile({ id: claims.sub, email: claims.email, fullName: meta.full_name, phone: meta.phone });
+    // Read first so a normal request costs one SELECT, not a write. The upsert covers accounts
+    // whose profile insert failed at sign-up. Metadata only seeds the display name and phone;
+    // it is user-editable, so it never decides the role.
+    const user =
+      (await prisma.user.findUnique({ where: { id: claims.sub } })) ??
+      (await ensureProfile({ id: claims.sub, email: claims.email, fullName: meta.full_name, phone: meta.phone }));
     return { id: user.id, email: user.email, fullName: user.fullName, role: user.role };
   } catch (error) {
     console.error("[auth] could not load profile", error);

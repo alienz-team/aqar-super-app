@@ -26,7 +26,7 @@ export function PropertyCard({ property: p, onAction }: PropertyCardProps) {
   return (
     <article className="group flex flex-col">
       <div className="relative overflow-hidden rounded-sm border border-line">
-        <PropertyVisual category={p.category} image={p.images[0]} alt={p.title[lang]} />
+        <PropertyVisual category={p.category} images={p.images} alt={p.title[lang]} offsetMs={(Number(p.id.slice(-2)) % 7) * 450} />
         <div className="absolute inset-x-3 top-3 flex items-center justify-between gap-2">
           {/* Dark glass in both themes: it always sits on a photo. */}
           <span className="rounded-xs bg-black/55 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">

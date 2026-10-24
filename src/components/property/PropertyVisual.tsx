@@ -1,7 +1,6 @@
-import Image from "next/image";
 import { Building, Building2, House, LandPlot, PartyPopper, Store, TreePalm, Waves, type LucideIcon } from "lucide-react";
+import { Crossfade } from "@/components/ui/Crossfade";
 import type { PropertyCategory } from "@/lib/types";
-import { unsplashLoader } from "@/lib/unsplash-loader";
 
 export const categoryIcons: Record<PropertyCategory, LucideIcon> = {
   APARTMENT: Building2,
@@ -18,23 +17,24 @@ const SIZES = "(min-width: 1280px) 416px, (min-width: 1024px) 33vw, (min-width: 
 
 interface PropertyVisualProps {
   category: PropertyCategory;
-  image?: string;
+  images: string[];
   alt: string;
+  /** Spreads the photo changes across a grid of cards. */
+  offsetMs?: number;
 }
 
-/** Listing photo with a cinematic scrim; falls back to a blueprint grid + category mark. */
-export function PropertyVisual({ category, image, alt }: PropertyVisualProps) {
-  if (image) {
+/** Listing photos that dissolve into one another; falls back to a blueprint grid + category mark. */
+export function PropertyVisual({ category, images, alt, offsetMs = 0 }: PropertyVisualProps) {
+  if (images.length > 0) {
     return (
       <div className="relative aspect-[4/3] overflow-hidden bg-surface-2">
-        <Image
-          src={image}
+        <Crossfade
+          images={images}
           alt={alt}
-          fill
           sizes={SIZES}
-          quality={80}
-          loader={unsplashLoader}
-          className="object-cover transition-transform duration-[1200ms] ease-out motion-safe:group-hover:scale-[1.03]"
+          intervalMs={5000}
+          offsetMs={offsetMs}
+          className="transition-transform duration-[1200ms] ease-out motion-safe:group-hover:scale-[1.03]"
         />
         {/* A light top shade so the badges stay legible; the rest of the photo is left clean. */}
         <div aria-hidden className="absolute inset-0 bg-[linear-gradient(to_bottom,rgb(0_0_0/0.35),transparent_30%)]" />

@@ -42,11 +42,12 @@
     "showSlide": "Show {name}",
     "slides": {
       "villa": "Luxury villas",
-      "construction": "Construction",
       "interior": "Interior & 3D design",
-      "landscape": "Gardens & landscaping",
-      "pools": "Swimming pools",
-      "maintenance": "Home maintenance"
+      "pools": "Pools & resorts",
+      "architecture": "Contemporary architecture",
+      "construction": "Construction",
+      "solar": "Solar & clean energy",
+      "landscape": "Gardens & landscaping"
     }
   },
   "home": {

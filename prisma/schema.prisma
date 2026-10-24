@@ -92,21 +92,24 @@ model User {
 }
 
 model Property {
-  id          String           @id @default(uuid()) @db.Uuid
-  title       String
-  description String
-  price       Decimal          @db.Decimal(14, 2)
-  areaSqm     Float
-  city        String
-  images      String[]
-  isVip       Boolean          @default(false)
-  listingType ListingType
-  rentCycle   RentCycle        @default(NONE)
-  category    PropertyCategory
+  id            String           @id @default(uuid()) @db.Uuid
+  title         String
+  description   String
+  /// Arabic copy shown on the RTL site; null falls back to the English text.
+  titleAr       String?
+  descriptionAr String?
+  price         Decimal          @db.Decimal(14, 2)
+  areaSqm       Float
+  city          String
+  images        String[]
+  isVip         Boolean          @default(false)
+  listingType   ListingType
+  rentCycle     RentCycle        @default(NONE)
+  category      PropertyCategory
   /// Null for listings the admin team publishes directly.
-  ownerId     String?          @db.Uuid
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  ownerId       String?          @db.Uuid
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
 
   owner    User?     @relation("PropertyOwner", fields: [ownerId], references: [id], onDelete: Cascade)
   bookings Booking[]
