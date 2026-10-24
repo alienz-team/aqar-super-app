@@ -1,6 +1,6 @@
 "use client";
 
-import { Crown, MapPin } from "lucide-react";
+import { Crown, Eye, MapPin } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { buttonStyles } from "@/components/ui/primitives";
 import type { PropertyListing } from "@/lib/types";
@@ -10,9 +10,10 @@ import { PropertyVisual } from "./PropertyVisual";
 interface PropertyCardProps {
   property: PropertyListing;
   onAction: (property: PropertyListing) => void;
+  onQuickView: (property: PropertyListing) => void;
 }
 
-export function PropertyCard({ property: p, onAction }: PropertyCardProps) {
+export function PropertyCard({ property: p, onAction, onQuickView }: PropertyCardProps) {
   const { t, lang } = useLanguage();
   const isRent = p.listingType === "RENT";
 
@@ -33,13 +34,29 @@ export function PropertyCard({ property: p, onAction }: PropertyCardProps) {
             {t.categories[p.category]}
             <span className="text-white/70"> / {isRent ? t.property.forRent : t.property.forSale}</span>
           </span>
-          {p.isVip && (
-            <span className="gold-metal inline-flex items-center gap-1 rounded-xs px-2 py-1 text-xs font-bold shadow-[inset_0_1px_0_rgb(255_255_255/0.5)]">
-              <Crown className="size-3.5" aria-hidden />
-              {t.property.vip}
-            </span>
-          )}
+          <div className="flex items-center gap-1.5">
+            {p.isNew && (
+              <span className="rounded-xs bg-brand px-2 py-1 text-xs font-bold text-brand-ink shadow-[0_0_0_1px_rgb(255_255_255/0.35)]">
+                {t.property.new}
+              </span>
+            )}
+            {p.isVip && (
+              <span className="gold-metal inline-flex items-center gap-1 rounded-xs px-2 py-1 text-xs font-bold shadow-[inset_0_1px_0_rgb(255_255_255/0.5)]">
+                <Crown className="size-3.5" aria-hidden />
+                {t.property.vip}
+              </span>
+            )}
+          </div>
         </div>
+        <button
+          type="button"
+          onClick={() => onQuickView(p)}
+          className="absolute bottom-3 end-3 inline-flex items-center gap-1.5 rounded-xs bg-black/60 px-2.5 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/80"
+        >
+          <Eye className="size-3.5" aria-hidden />
+          {t.property.quickView}
+          <span className="sr-only">: {p.title[lang]}</span>
+        </button>
       </div>
 
       <div className="flex flex-1 flex-col pt-5">

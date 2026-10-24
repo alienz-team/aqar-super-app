@@ -5,10 +5,9 @@ import Link from "next/link";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { Crossfade } from "@/components/ui/Crossfade";
 import { buttonStyles } from "@/components/ui/primitives";
-import { interpolate } from "@/dictionaries";
 import { serviceSectors } from "@/lib/mock-data";
 import type { ServiceSector, ServiceSectorId } from "@/lib/types";
-import { cn, formatNumber, formatPrice } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { sectorIcons } from "./sector-icons";
 import { ServiceRequestModal } from "./ServiceRequestModal";
 
@@ -23,13 +22,13 @@ interface ServicesGridProps {
 
 /** Sectors laid out as one ruled sheet (cells share hairlines) rather than floating cards. */
 export function ServicesGrid({ variant, initialSector }: ServicesGridProps) {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
   const [selected, setSelected] = useState<ServiceSector | null>(null);
 
   // Deep link (?sector=...) opens the form after mount, keeping server HTML free of date defaults.
   useEffect(() => {
     const match = serviceSectors.find((s) => s.id === initialSector);
-    if (match) setSelected(match);
+    if (match?.mode === "quote") setSelected(match);
   }, [initialSector]);
 
   return (
@@ -51,36 +50,28 @@ export function ServicesGrid({ variant, initialSector }: ServicesGridProps) {
                 <h3 className="text-lg font-semibold">{copy.name}</h3>
                 <p className="mt-1.5 text-sm text-muted">{copy.desc}</p>
 
-                {variant === "full" && (
-                  <>
-                    <ul className="mt-4 flex flex-wrap gap-1.5">
-                      {sector.categories.map((c) => (
-                        <li key={c} className="rounded-xs border border-line px-2 py-0.5 text-xs text-muted">
-                          {t.services.categories[c]}
-                        </li>
-                      ))}
-                    </ul>
-                    <p className="tabular mt-4 text-sm text-muted">
-                      {interpolate(t.services.providers, { count: formatNumber(sector.providers, lang) })}
-                    </p>
-                  </>
+                {variant === "full" && sector.categories.length > 0 && (
+                  <ul className="mt-4 flex flex-wrap gap-1.5">
+                    {sector.categories.map((c) => (
+                      <li key={c} className="rounded-xs border border-line px-2 py-0.5 text-xs text-muted">
+                        {t.services.categories[c]}
+                      </li>
+                    ))}
+                  </ul>
                 )}
 
-                <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
-                  <p className="tabular text-sm font-semibold text-gold-text">
-                    {interpolate(t.services.from, { price: formatPrice(sector.startingPrice, lang) })}
-                  </p>
-                  {variant === "full" ? (
-                    <button
-                      type="button"
-                      onClick={() => setSelected(sector)}
-                      className={cn(sector.mode === "technician" ? buttonStyles.primary : buttonStyles.secondary, "px-3 py-2")}
-                    >
-                      {sector.mode === "technician" ? t.services.bookTechnician : t.services.requestQuote}
+                <div className="mt-auto flex justify-end pt-5">
+                  {sector.mode === "browse" ? (
+                    <Link href="/properties" className={cn(variant === "full" ? buttonStyles.secondary : cn(buttonStyles.ghost, "text-gold-text"), "px-3 py-2")}>
+                      {t.services.browseListings}
+                    </Link>
+                  ) : variant === "full" ? (
+                    <button type="button" onClick={() => setSelected(sector)} className={cn(buttonStyles.secondary, "px-3 py-2")}>
+                      {t.services.requestQuote}
                     </button>
                   ) : (
                     <Link href={`/services?sector=${sector.id}`} className={cn(buttonStyles.ghost, "text-gold-text")}>
-                      {sector.mode === "technician" ? t.services.bookTechnician : t.services.requestQuote}
+                      {t.services.requestQuote}
                     </Link>
                   )}
                 </div>

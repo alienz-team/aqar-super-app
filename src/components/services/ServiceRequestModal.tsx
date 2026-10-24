@@ -18,7 +18,7 @@ interface ServiceRequestModalProps {
 export function ServiceRequestModal({ sector, onClose }: ServiceRequestModalProps) {
   const { t } = useLanguage();
   const title = sector
-    ? `${sector.mode === "technician" ? t.services.bookTechnician : t.services.requestQuote}: ${t.services.sectors[sector.id].name}`
+    ? `${t.services.requestQuote}: ${t.services.sectors[sector.id].name}`
     : "";
 
   return (
@@ -37,13 +37,12 @@ function RequestForm({ sector, onDone }: { sector: ServiceSector; onDone: () => 
   const [phone, setPhone] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [reference, setReference] = useState<string | null>(null);
-  const isTechnician = sector.mode === "technician";
 
   if (reference) {
     return (
       <Confirmation
-        title={isTechnician ? t.services.form.bookedTitle : t.services.form.sentTitle}
-        body={interpolate(isTechnician ? t.services.form.bookedBody : t.services.form.sentBody, { ref: reference, phone })}
+        title={t.services.form.sentTitle}
+        body={interpolate(t.services.form.sentBody, { ref: reference, phone })}
         onDone={onDone}
       />
     );
@@ -54,7 +53,7 @@ function RequestForm({ sector, onDone }: { sector: ServiceSector; onDone: () => 
     if (details.trim().length < 5 || !isValidLibyanMobile(phone)) return setError(t.services.form.error);
     setError(null);
     // TODO: create a ServiceRequest row (status OPEN) via a server action once Supabase is connected.
-    setReference(makeReference(isTechnician ? "TC" : "QT"));
+    setReference(makeReference("QT"));
   }
 
   return (
@@ -117,7 +116,7 @@ function RequestForm({ sector, onDone }: { sector: ServiceSector; onDone: () => 
         </p>
       )}
       <button type="submit" className={cn(buttonStyles.primary, "w-full py-3")}>
-        {isTechnician ? t.services.form.submitTechnician : t.services.form.submitQuote}
+        {t.services.form.submitQuote}
       </button>
     </form>
   );

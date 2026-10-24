@@ -151,6 +151,7 @@ export const properties: PropertyListing[] = [
     city: cities[0],
     images: photos("1586023492125-27b2c045efd7", "1615874959474-d609969a20ed", "1616486338812-3dadae4b4ace", "1556912173-3bb406ef7e77", "1584622650111-993a426fbf0a"),
     isVip: false,
+    isNew: true,
     listingType: "RENT",
     rentCycle: "MONTHLY",
     category: "APARTMENT",
@@ -169,6 +170,7 @@ export const properties: PropertyListing[] = [
     city: cities[1],
     images: photos("1580587771525-78b9dba3b914", "1602343168117-bb8ffe3e2e9f", "1616594039964-ae9021a400a0", "1600607688969-a5bfcd646154", "1600566752355-35792bedcfea"),
     isVip: true,
+    isNew: true,
     listingType: "SALE",
     rentCycle: "NONE",
     category: "VILLA",
@@ -193,7 +195,7 @@ export const properties: PropertyListing[] = [
   },
   {
     id: "p-1011",
-    title: { en: "Contemporary villa, Al Siraj", ar: "فيلا عصرية، السراج" },
+    title: { en: "Villa in Al Siraj", ar: "فيلا في السراج" },
     description: {
       en: "Timber and glass facade, a pool-facing living room with a floating staircase, 5 bedrooms and a double garage.",
       ar: "واجهة من الخشب والزجاج، صالة مطلة على المسبح بدرج معلّق، ٥ غرف نوم ومرآب مزدوج.",
@@ -202,7 +204,8 @@ export const properties: PropertyListing[] = [
     areaSqm: 480,
     city: cities[0],
     images: photos("1600047509807-ba8f99d2cdde", "1600566753151-384129cf4e3e", "1600573472592-401b489a3cdc", "1617104678098-de229db51175"),
-    isVip: false,
+    isVip: true,
+    isNew: true,
     listingType: "SALE",
     rentCycle: "NONE",
     category: "VILLA",
@@ -227,9 +230,33 @@ export const properties: PropertyListing[] = [
     bedrooms: 3,
     bathrooms: 2,
   },
+  {
+    id: "p-1013",
+    title: { en: "Apartments on Airport Road", ar: "شقق في طريق المطار" },
+    description: {
+      en: "New residential block with 3-bedroom apartments, a lift, covered parking and a generator. Ready to move in, ten minutes from the airport.",
+      ar: "عمارة سكنية جديدة بشقق من ٣ غرف نوم، مصعد، مواقف مظللة ومولد كهرباء. جاهزة للسكن وعلى بعد عشر دقائق من المطار.",
+    },
+    price: 650_000,
+    areaSqm: 180,
+    city: cities[0],
+    images: photos("1515263487990-61b07816b324", "1618221118493-9cfa1a1c00da", "1600121848594-d8644e57abab", "1505693416388-ac5ce068fe85"),
+    isVip: true,
+    isNew: true,
+    listingType: "SALE",
+    rentCycle: "NONE",
+    category: "APARTMENT",
+    bedrooms: 3,
+    bathrooms: 2,
+  },
 ];
 
-export const featuredProperties = properties.filter((p) => p.isVip);
+// Hand-picked order: Aqaar's two classic offers lead, then the VIP listings.
+const featuredIds = ["p-1011", "p-1013", "p-1001"];
+export const featuredProperties = [
+  ...featuredIds.map((id) => properties.find((p) => p.id === id)!),
+  ...properties.filter((p) => p.isVip && !featuredIds.includes(p.id)),
+];
 
 /** Hero background stages, shown in this order. */
 export const heroSlides: HeroSlide[] = [
@@ -249,54 +276,46 @@ export const sectionImages = {
   auth: photos("1613977257592-4871e5fcd7c4", "1600585154340-be6161a56a0c", "1564501049412-61c2a3083791"),
 };
 
+/**
+ * Aqaar's six signature services. Photos come from the same eyeballed pool as the listings:
+ * architecture, interiors, pools and equipment only, no people.
+ */
 export const serviceSectors: ServiceSector[] = [
   {
+    id: "marketing",
+    categories: [],
+    mode: "browse",
+    images: photos("1613977257365-aaae5a9817ff", "1564501049412-61c2a3083791", "1512917774080-9991f1c4c750", "1600585154340-be6161a56a0c"),
+  },
+  {
     id: "contracting",
-    categories: ["CONSTRUCTION_SKELETON", "CONSTRUCTION_FINISHING"],
-    startingPrice: 600,
-    providers: 184,
+    categories: ["CONSTRUCTION_SKELETON", "CONSTRUCTION_FINISHING", "MAINTENANCE_ELECTRICAL", "MAINTENANCE_PLUMBING"],
     mode: "quote",
     images: photos("1599707254554-027aeb4deacd", "1565008447742-97f6f38c985c", "1508450859948-4e04fabaa4ea", "1523217582562-09d0def993a6"),
   },
   {
-    id: "design3d",
+    id: "interior",
     categories: ["DESIGN_3D"],
-    startingPrice: 2_500,
-    providers: 62,
     mode: "quote",
     images: photos("1618220179428-22790b461013", "1617806118233-18e1de247200", "1615529182904-14819c35db37", "1616486338812-3dadae4b4ace"),
   },
   {
-    id: "poolsLandscape",
-    categories: ["SWIMMING_POOL_LANDSCAPE"],
-    startingPrice: 60_000,
-    providers: 41,
+    id: "pools",
+    categories: ["SWIMMING_POOL_LANDSCAPE", "MAINTENANCE_POOL"],
     mode: "quote",
     images: photos("1571896349842-33c89424de2d", "1572331165267-854da2b10ccc", "1576013551627-0cc20b96c2a7", "1585320806297-9794b3e4eeae"),
   },
   {
-    id: "solarWater",
-    categories: ["SOLAR_ENERGY_WATER"],
-    startingPrice: 15_000,
-    providers: 37,
+    id: "security",
+    categories: ["SMART_HOME_SECURITY"],
     mode: "quote",
-    images: photos("1509391366360-2e959784a276", "1592833159155-c62df1b65634", "1594818379496-da1e345b0ded", "1497440001374-f26997328c1b"),
+    images: photos("1557597774-9d273605dfa9", "1585128792020-803d29415281", "1600494603989-9650cf6ddd3d"),
   },
   {
     id: "smartHome",
     categories: ["SMART_HOME_SECURITY"],
-    startingPrice: 3_500,
-    providers: 53,
     mode: "quote",
-    images: photos("1557597774-9d273605dfa9", "1617104678098-de229db51175", "1585128792020-803d29415281", "1600494603989-9650cf6ddd3d"),
-  },
-  {
-    id: "maintenance",
-    categories: ["MAINTENANCE_PLUMBING", "MAINTENANCE_ELECTRICAL", "MAINTENANCE_AC", "MAINTENANCE_POOL"],
-    startingPrice: 80,
-    providers: 410,
-    mode: "technician",
-    images: photos("1426927308491-6380b6a9936f", "1581244277943-fe4a9c777189", "1572981779307-38b8cabb2407", "1534398079543-7ae6d016b86a"),
+    images: photos("1617104678098-de229db51175", "1615874959474-d609969a20ed", "1616137466211-f939a420be84"),
   },
 ];
 

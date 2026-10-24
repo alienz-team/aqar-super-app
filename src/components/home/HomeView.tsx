@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { BourseTicker } from "@/components/bourse/BourseTicker";
+import { ContactSection } from "@/components/contact/ContactSection";
 import { PropertyGrid } from "@/components/property/PropertyGrid";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { ServicesGrid } from "@/components/services/ServicesGrid";
 import { Reveal, SLOW_EASE, TextReveal } from "@/components/ui/motion";
 import { buttonStyles, SectionHeading } from "@/components/ui/primitives";
 import { featuredProperties } from "@/lib/mock-data";
+import { AboutSection } from "./AboutSection";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { HeroSearch } from "./HeroSearch";
 
@@ -85,6 +87,8 @@ export function HomeView() {
         </Reveal>
       </section>
 
+      <AboutSection />
+
       <section className="mx-auto max-w-7xl px-4 pt-20 sm:px-6 sm:pt-24">
         <div className="relative isolate flex flex-col gap-6 overflow-hidden rounded-sm border border-gold-line bg-surface p-6 sm:flex-row sm:items-center sm:justify-between sm:p-10">
           {/* Grid fades in toward the button side so it never runs under the copy. */}
@@ -101,6 +105,8 @@ export function HomeView() {
           </Link>
         </div>
       </section>
+
+      <ContactSection />
     </>
   );
 }

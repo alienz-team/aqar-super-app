@@ -29,7 +29,7 @@ export function AdminSidebar() {
         <Link href="/admin" className="flex items-center gap-3">
           <BrandTile className="size-9" />
           <span className="leading-tight">
-            <span className="block text-sm font-semibold tracking-wide">AQAR Admin</span>
+            <span className="block text-sm font-semibold tracking-wide">Aqaar Admin</span>
             <span className="block text-xs text-white/50">Listings & services</span>
           </span>
         </Link>

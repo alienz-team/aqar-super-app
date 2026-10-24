@@ -1,11 +1,11 @@
-import { Box, HardHat, ShieldCheck, Sun, Waves, Wrench, type LucideIcon } from "lucide-react";
+import { Cctv, HardHat, KeyRound, PaintRoller, Smartphone, Waves, type LucideIcon } from "lucide-react";
 import type { ServiceSectorId } from "@/lib/types";
 
 export const sectorIcons: Record<ServiceSectorId, LucideIcon> = {
+  marketing: KeyRound,
   contracting: HardHat,
-  design3d: Box,
-  poolsLandscape: Waves,
-  solarWater: Sun,
-  smartHome: ShieldCheck,
-  maintenance: Wrench,
+  interior: PaintRoller,
+  pools: Waves,
+  security: Cctv,
+  smartHome: Smartphone,
 };

@@ -10,7 +10,7 @@ import { Reveal, SLOW_EASE, TextReveal } from "@/components/ui/motion";
 import { buttonStyles } from "@/components/ui/primitives";
 import { sectionImages, serviceSectors } from "@/lib/mock-data";
 import type { ServiceSector, ServiceSectorId } from "@/lib/types";
-import { cn, formatNumber, formatPrice } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { ServiceRequestModal } from "./ServiceRequestModal";
 
 export function ServicesView({ initialSector }: { initialSector?: ServiceSectorId }) {
@@ -21,7 +21,7 @@ export function ServicesView({ initialSector }: { initialSector?: ServiceSectorI
     const match = serviceSectors.find((s) => s.id === initialSector);
     if (!match) return;
     document.getElementById(`sector-${match.id}`)?.scrollIntoView({ block: "start" });
-    setSelected(match);
+    if (match.mode === "quote") setSelected(match);
   }, [initialSector]);
 
   return (
@@ -99,33 +99,31 @@ interface ChapterProps {
   onRequest: (sector: ServiceSector) => void;
 }
 
-/** Skandic-style spec list: a quiet label over a serif value, separated by hairlines. */
-function SectorStats({ sector, onDark = false }: { sector: ServiceSector; onDark?: boolean }) {
-  const { t, lang } = useLanguage();
-  const stats = [
-    { label: t.services.stats.from, value: formatPrice(sector.startingPrice, lang) },
-    { label: t.services.stats.providers, value: formatNumber(sector.providers, lang) },
-    { label: t.services.stats.scope, value: sector.categories.map((c) => t.services.categories[c]).join(lang === "ar" ? "، " : ", ") },
-  ];
-
+/** The kinds of work a sector covers, as quiet hairline-separated labels. */
+function SectorScope({ sector, onDark = false }: { sector: ServiceSector; onDark?: boolean }) {
+  const { t } = useLanguage();
+  if (sector.categories.length === 0) return null;
   return (
-    <dl className={cn("grid gap-x-8 gap-y-5 sm:grid-cols-[auto_auto_minmax(0,1fr)]", onDark ? "text-white" : "text-ink")}>
-      {stats.map((s) => (
-        <div key={s.label} className={cn("border-t pt-3", onDark ? "border-white/25" : "border-line")}>
-          <dt className={cn("text-xs", onDark ? "text-white/60" : "text-muted")}>{s.label}</dt>
-          <dd className="tabular mt-1 font-serif text-xl leading-snug sm:text-2xl">{s.value}</dd>
-        </div>
+    <ul className={cn("flex flex-wrap gap-x-6 gap-y-2 border-t pt-4 text-sm", onDark ? "border-white/25 text-white/80" : "border-line text-muted")}>
+      {sector.categories.map((c) => (
+        <li key={c}>{t.services.categories[c]}</li>
       ))}
-    </dl>
+    </ul>
   );
 }
 
 function RequestButton({ sector, onRequest }: ChapterProps) {
   const { t } = useLanguage();
-  const technician = sector.mode === "technician";
+  if (sector.mode === "browse") {
+    return (
+      <Link href="/properties" className={cn(buttonStyles.primary, "px-6 py-3")}>
+        {t.services.browseListings}
+      </Link>
+    );
+  }
   return (
-    <button type="button" onClick={() => onRequest(sector)} className={cn(technician ? buttonStyles.gold : buttonStyles.primary, "px-6 py-3")}>
-      {technician ? t.services.bookTechnician : t.services.requestQuote}
+    <button type="button" onClick={() => onRequest(sector)} className={cn(buttonStyles.primary, "px-6 py-3")}>
+      {t.services.requestQuote}
     </button>
   );
 }
@@ -159,13 +157,13 @@ function SplitChapter({ sector, onRequest, flip }: ChapterProps & { flip: boolea
           <TextReveal
             id={`sector-${sector.id}-title`}
             text={copy.name}
-            className="font-serif text-5xl leading-[1.05] sm:text-6xl rtl:leading-[1.35]"
+            className="font-serif text-4xl leading-[1.1] sm:text-5xl rtl:leading-[1.4]"
           />
           <Reveal delay={0.3} y={0}>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-muted">{t.services.stories[sector.id]}</p>
+            <p className="mt-6 max-w-md text-lg leading-relaxed text-muted">{copy.desc}</p>
           </Reveal>
           <Reveal delay={0.5} y={0} className="mt-10">
-            <SectorStats sector={sector} />
+            <SectorScope sector={sector} />
           </Reveal>
           <Reveal delay={0.7} y={0} className="mt-10">
             <RequestButton sector={sector} onRequest={onRequest} />
@@ -202,14 +200,14 @@ function FullBleedChapter({ sector, onRequest }: ChapterProps) {
           <TextReveal
             id={`sector-${sector.id}-title`}
             text={copy.name}
-            className="font-serif text-5xl leading-[1.05] text-white sm:text-7xl rtl:leading-[1.35]"
+            className="font-serif text-4xl leading-[1.1] text-white sm:text-6xl rtl:leading-[1.4]"
           />
           <Reveal delay={0.3} y={0}>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/75">{t.services.stories[sector.id]}</p>
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/75">{copy.desc}</p>
           </Reveal>
         </div>
         <Reveal delay={0.5} y={0} className="lg:col-span-6">
-          <SectorStats sector={sector} onDark />
+          <SectorScope sector={sector} onDark />
           <div className="mt-8">
             <RequestButton sector={sector} onRequest={onRequest} />
           </div>

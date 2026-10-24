@@ -18,7 +18,7 @@ export default async function AdminOverviewPage() {
     <>
       <PageHeader
         title="Overview"
-        description="What is live on AQAR right now."
+        description="What is live on Aqaar right now."
         action={
           <div className="flex flex-wrap gap-2">
             <Link href="/admin/properties" className={buttonStyles.secondary}>

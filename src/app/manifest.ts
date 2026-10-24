@@ -3,8 +3,8 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/",
-    name: "AQAR | عقار - Super App",
-    short_name: "AQAR",
+    name: "عقـــار | Aqaar",
+    short_name: "Aqaar",
     description: "Properties, construction services and live building material prices in one app.",
     start_url: "/",
     scope: "/",

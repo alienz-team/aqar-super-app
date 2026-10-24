@@ -50,10 +50,34 @@ export function PropertiesView({ initialFilters }: { initialFilters: PropertyFil
         <p className="text-muted lg:pb-2">{t.propertiesPage.subtitle}</p>
       </header>
 
+      {/* Category tabs: the quickest way into villas, apartments, land and rest houses. */}
+      <nav aria-label={t.propertiesPage.categories} className="-mx-4 mt-10 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+        <ul className="flex min-w-max gap-2">
+          {(["ALL", ...CATEGORIES] as const).map((c) => {
+            const active = filters.category === c;
+            return (
+              <li key={c}>
+                <button
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => update({ category: c })}
+                  className={cn(
+                    "whitespace-nowrap rounded-sm border px-4 py-2 text-sm font-medium transition-colors",
+                    active ? "border-brand bg-brand text-brand-ink" : "border-line text-muted hover:border-gold hover:text-ink",
+                  )}
+                >
+                  {t.categoryTabs[c]}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
       {/* Filters as one ruled strip: hairlines above and below, groups separated by space, not boxes. */}
       <section
         aria-label={t.propertiesPage.filters}
-        className="mt-10 grid gap-x-8 gap-y-5 border-y border-line py-6 lg:grid-cols-[auto_auto_minmax(0,1fr)] lg:items-end"
+        className="mt-6 grid gap-x-8 gap-y-5 border-y border-line py-6 lg:grid-cols-[auto_auto_minmax(0,1fr)] lg:items-end"
       >
         <div className="flex flex-wrap gap-x-8 gap-y-4 lg:contents">
           <div>
@@ -78,21 +102,7 @@ export function PropertiesView({ initialFilters }: { initialFilters: PropertyFil
           )}
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2 lg:col-start-3">
-          <Field label={t.propertiesPage.category}>
-            <select
-              value={filters.category}
-              onChange={(e) => update({ category: e.target.value as PropertyFilters["category"] })}
-              className={inputStyles}
-            >
-              <option value="ALL">{t.hero.anyCategory}</option>
-              {CATEGORIES.map((c) => (
-                <option key={c} value={c}>
-                  {t.categories[c]}
-                </option>
-              ))}
-            </select>
-          </Field>
+        <div className="grid gap-3 sm:max-w-xs lg:col-start-3 lg:w-full lg:max-w-none">
           <Field label={t.propertiesPage.city}>
             <select value={filters.city} onChange={(e) => update({ city: e.target.value })} className={inputStyles}>
               <option value="ALL">{t.hero.anyCity}</option>

@@ -30,15 +30,15 @@ export function BrandTile({ className, priority }: { className?: string; priorit
 export function Logo({ size = "sm" }: { size?: "sm" | "lg" }) {
   const lg = size === "lg";
   return (
-    <Link href="/" className="flex items-center gap-2.5" aria-label="AQAR | عقار">
+    <Link href="/" className="flex items-center gap-2.5" aria-label="عقـــار | Aqaar">
       <BrandTile className={lg ? "size-14" : "size-10"} priority={!lg} />
       {/* Same order as the logo artwork: Arabic name over the spaced Latin one. */}
       <span aria-hidden className="flex flex-col items-center leading-none">
         <span lang="ar" className={cn("font-semibold text-gold-text", lg ? "text-2xl" : "text-lg")}>
-          عقار
+          عقـــار
         </span>
-        <span dir="ltr" className={cn("font-medium tracking-[0.32em] text-ink ps-[0.32em]", lg ? "mt-1.5 text-sm" : "mt-1 text-[11px]")}>
-          AQAR
+        <span dir="ltr" className={cn("font-medium tracking-[0.22em] text-ink ps-[0.22em]", lg ? "mt-1.5 text-sm" : "mt-1 text-[11px]")}>
+          Aqaar
         </span>
       </span>
     </Link>

@@ -16,10 +16,10 @@ const amiri = Amiri({ subsets: ["arabic"], weight: ["400", "700"], variable: "--
 const fontVars = [jakarta.variable, cairo.variable, playfair.variable, amiri.variable].join(" ");
 
 export const metadata: Metadata = {
-  title: { default: "AQAR | عقار - Super App", template: "%s | AQAR عقار" },
+  title: { default: "عقـــار | Aqaar", template: "%s | عقـــار | Aqaar" },
   description: "Buy, rent and book properties, hire contractors and technicians, and track live building material prices.",
-  applicationName: "AQAR",
-  appleWebApp: { capable: true, title: "AQAR", statusBarStyle: "black-translucent" },
+  applicationName: "Aqaar",
+  appleWebApp: { capable: true, title: "Aqaar", statusBarStyle: "black-translucent" },
   icons: {
     icon: [
       { url: "/icons/favicon.ico", sizes: "16x16 32x32 48x48" },

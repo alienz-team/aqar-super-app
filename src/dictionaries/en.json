@@ -1,6 +1,6 @@
 {
   "brand": {
-    "name": "AQAR",
+    "name": "Aqaar",
     "tagline": "Property, building and upkeep in one app"
   },
   "nav": {
@@ -13,10 +13,10 @@
   },
   "actions": {
     "install": "Install App",
-    "installTitle": "Install AQAR",
+    "installTitle": "Install Aqaar",
     "installIos": "In Safari, tap the Share button, then choose “Add to Home Screen”.",
     "installOther": "Open your browser menu and choose “Install app” or “Add to Home screen”.",
-    "installed": "AQAR is installed on this device.",
+    "installed": "Aqaar is installed on this device.",
     "close": "Close",
     "toDark": "Switch to dark mode",
     "toLight": "Switch to light mode",
@@ -25,7 +25,7 @@
   },
   "hero": {
     "titleLead": "Looking for a property?",
-    "titleAccent": "Let AQAR find it for you",
+    "titleAccent": "Let Aqaar find it for you",
     "subtitle": "Buy, rent or book a weekend istiraha, then hire the contractors and technicians to look after it — with today's material prices beside you.",
     "searchLabel": "Quick search",
     "tabs": {
@@ -54,8 +54,8 @@
     "featuredTitle": "VIP listings",
     "featuredSub": "Hand-checked by our team this week.",
     "viewAll": "See all properties",
-    "servicesTitle": "Build, upgrade, repair",
-    "servicesSub": "Six trades, vetted providers, quotes within 24 hours.",
+    "servicesTitle": "Our six services",
+    "servicesSub": "Marketing, building, design, pools, security and smart homes from one team.",
     "allServices": "Browse all services",
     "bourseTitle": "Today's building materials",
     "bourseSub": "Prices refresh through the day. Use them to cost your project in seconds.",
@@ -80,7 +80,19 @@
     "forRent": "For rent",
     "beds": "Beds",
     "baths": "Baths",
-    "area": "Area"
+    "area": "Area",
+    "new": "New",
+    "quickView": "Quick view",
+    "quickViewTitle": "Quick view: {name}",
+    "gallery": "Photo gallery",
+    "photoOf": "Photo {n} of {total}",
+    "prevPhoto": "Previous photo",
+    "nextPhoto": "Next photo",
+    "showPhoto": "Show photo {n}",
+    "askWhatsapp": "Ask on WhatsApp",
+    "callUs": "Call us",
+    "whatsappMessage": "Hello Aqaar, I am interested in: {name}",
+    "details": "Details"
   },
   "categories": {
     "APARTMENT": "Apartment",
@@ -113,7 +125,8 @@
     "emptyTitle": "No properties match these filters",
     "emptyBody": "Try another type or city, or clear the filters to see everything.",
     "clear": "Clear filters",
-    "filters": "Filters"
+    "filters": "Filters",
+    "categories": "Property type"
   },
   "booking": {
     "title": "Book {name}",
@@ -142,45 +155,42 @@
     "done": "Done"
   },
   "services": {
-    "title": "Construction, energy and maintenance",
-    "subtitle": "From the first column to the last AC service: tell us what you need and compare quotes from vetted providers.",
-    "from": "From {price}",
-    "providers": "{count} providers",
+    "title": "Our services",
+    "subtitle": "Real estate marketing, contracting, design, pools, security systems and smart homes, handled by one team.",
     "requestQuote": "Request a quote",
-    "bookTechnician": "Book a technician",
     "sectors": {
+      "marketing": {
+        "name": "Real Estate Marketing",
+        "desc": "Buying and selling properties of every type."
+      },
       "contracting": {
-        "name": "Contracting",
-        "desc": "Skeleton and full finishing for villas, apartments and annexes."
+        "name": "Contracting & Construction",
+        "desc": "Building, maintenance and finishing works, including electrical and plumbing."
       },
-      "design3d": {
-        "name": "3D design",
-        "desc": "Architectural plans, interior renders and walkthroughs before you build."
+      "interior": {
+        "name": "Interior Design & Decor",
+        "desc": "Design, painting and gypsum board services."
       },
-      "poolsLandscape": {
-        "name": "Pools & landscaping",
-        "desc": "Swimming pools, irrigation, lawns and shaded outdoor seating."
+      "pools": {
+        "name": "Swimming Pool Construction & Maintenance",
+        "desc": "Building swimming pools and maintaining water systems and filters."
       },
-      "solarWater": {
-        "name": "Solar & water",
-        "desc": "Rooftop solar, water heaters, tanks and filtration systems."
+      "security": {
+        "name": "Security & Surveillance Systems",
+        "desc": "Installing surveillance systems, alarms and safety equipment."
       },
       "smartHome": {
-        "name": "Smart home",
-        "desc": "Cameras, smart locks, lighting scenes and intercoms."
-      },
-      "maintenance": {
-        "name": "Maintenance",
-        "desc": "Plumbing, electrical, AC and pool technicians, same-day slots."
+        "name": "Smart Home Automation",
+        "desc": "Control your home at the touch of a button."
       }
     },
     "categories": {
       "CONSTRUCTION_SKELETON": "Skeleton construction",
       "CONSTRUCTION_FINISHING": "Finishing works",
-      "DESIGN_3D": "3D design",
-      "SWIMMING_POOL_LANDSCAPE": "Pool & landscape",
+      "DESIGN_3D": "Design & decor",
+      "SWIMMING_POOL_LANDSCAPE": "Pool construction",
       "SOLAR_ENERGY_WATER": "Solar energy & water",
-      "SMART_HOME_SECURITY": "Smart home & security",
+      "SMART_HOME_SECURITY": "Security & smart home",
       "MAINTENANCE_PLUMBING": "Plumbing",
       "MAINTENANCE_ELECTRICAL": "Electrical",
       "MAINTENANCE_AC": "Air conditioning",
@@ -194,28 +204,13 @@
       "detailsPlaceholder": "e.g. 400 m² plot, two floors, need skeleton only",
       "phone": "Mobile number",
       "submitQuote": "Send quote request",
-      "submitTechnician": "Book technician",
       "error": "Add a short description and a 10-digit mobile number starting with 091–095.",
       "sentTitle": "Request sent",
-      "sentBody": "Reference {ref}. Expect up to 3 quotes on {phone} within 24 hours.",
-      "bookedTitle": "Technician booked",
-      "bookedBody": "Reference {ref}. A technician will call {phone} before arriving."
+      "sentBody": "Reference {ref}. Expect up to 3 quotes on {phone} within 24 hours."
     },
     "introTitle": "Build the house you will grow old in.",
     "introCue": "Scroll to see each service",
-    "stats": {
-      "from": "Starting at",
-      "providers": "Vetted providers",
-      "scope": "Covers"
-    },
-    "stories": {
-      "contracting": "Crews who have raised hundreds of homes across Tripoli, Benghazi and Misrata. One contract covers the frame, the finishes and the handover.",
-      "design3d": "Walk through every room before a single block is laid. Move a wall, a window or a floor finish while it still costs nothing.",
-      "poolsLandscape": "A pool sized for the family, shade where the afternoon sun lands, and an irrigation plan that survives August.",
-      "solarWater": "Panels on the roof, a tank that stays full and hot water without the generator, sized from your actual bills.",
-      "smartHome": "Cameras you can check from anywhere, doors that open for the right people, and lights that know when you are home.",
-      "maintenance": "When a pipe bursts or the AC quits in July, a vetted technician can be at your door the same day."
-    }
+    "browseListings": "Browse properties"
   },
   "bourse": {
     "title": "Materials bourse",
@@ -259,10 +254,10 @@
     "getQuote": "Get contractor quotes"
   },
   "footer": {
-    "about": "AQAR brings property listings, construction trades and live material prices together for homeowners across Libya.",
+    "about": "Aqaar is a team of property brokers and experts offering real estate marketing, contracting, design, pools, security systems and smart homes in Libya.",
     "explore": "Explore",
     "contact": "Contact",
-    "rights": "© 2026 AQAR. All rights reserved."
+    "rights": "© 2026 Aqaar. All rights reserved."
   },
   "auth": {
     "login": "Log in",
@@ -285,7 +280,7 @@
     "submitSignup": "Create account",
     "submittingLogin": "Logging in…",
     "submittingSignup": "Creating account…",
-    "noAccount": "New to AQAR?",
+    "noAccount": "New to Aqaar?",
     "haveAccount": "Already have an account?",
     "checkEmailTitle": "Check your email",
     "checkEmailBody": "We sent a confirmation link to {email}. Open it to activate your account, then log in.",
@@ -315,7 +310,7 @@
     "noRequests": "No service requests yet. Quotes and technician visits you request will show up here.",
     "browseProperties": "Browse properties",
     "browseServices": "Browse services",
-    "adminDenied": "The admin dashboard is only for AQAR staff accounts.",
+    "adminDenied": "The admin dashboard is only for Aqaar staff accounts.",
     "status": {
       "PENDING": "Pending",
       "CONFIRMED": "Confirmed",
@@ -325,5 +320,36 @@
       "IN_PROGRESS": "In progress",
       "COMPLETED": "Completed"
     }
+  },
+  "categoryTabs": {
+    "ALL": "All",
+    "VILLA": "Villas",
+    "APARTMENT": "Apartments",
+    "LAND": "Land",
+    "ISTIRAHA": "Rest houses",
+    "CHALET": "Chalets",
+    "COMMERCIAL": "Commercial",
+    "EVENT_HALL": "Event halls"
+  },
+  "about": {
+    "title": "About us",
+    "body": "The Aqaar team is a group of brokers and property experts with more than 17 years in modern real estate. We are ready to offer the best deals with the best specifications, wherever you need them. Don't hesitate to call us.",
+    "yearsLabel": "Years of experience"
+  },
+  "contact": {
+    "title": "Contact us",
+    "subtitle": "Find us in Tripoli, or message us any time.",
+    "location": "Location",
+    "phone": "Phone & WhatsApp",
+    "email": "Email",
+    "call": "Call us",
+    "whatsapp": "WhatsApp",
+    "openMaps": "Open in Google Maps",
+    "openWaze": "Open in Waze",
+    "followUs": "Follow us",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "backToTop": "Back to top",
+    "chatWhatsapp": "Chat on WhatsApp"
   }
 }

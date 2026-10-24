@@ -20,6 +20,8 @@ export interface PropertyListing {
   city: Localized;
   images: string[];
   isVip: boolean;
+  /** Recently listed: shows the "New" badge. */
+  isNew?: boolean;
   listingType: ListingType;
   rentCycle: RentCycle;
   category: PropertyCategory;
@@ -37,20 +39,15 @@ export interface MaterialQuote {
   updatedAt: string;
 }
 
-export type ServiceSectorId =
-  | "contracting"
-  | "design3d"
-  | "poolsLandscape"
-  | "solarWater"
-  | "smartHome"
-  | "maintenance";
+/** Aqaar's six signature services, in display order. */
+export type ServiceSectorId = "marketing" | "contracting" | "interior" | "pools" | "security" | "smartHome";
 
 export interface ServiceSector {
   id: ServiceSectorId;
+  /** Request-form options; empty for marketing, which sends people to the listings instead. */
   categories: ServiceCategory[];
-  startingPrice: number;
-  providers: number;
-  mode: "quote" | "technician";
+  /** quote: opens the request form; browse: links to the property listings. */
+  mode: "quote" | "browse";
   /** Unsplash photos the sector card and chapter cycle through (3-4, no people). */
   images: string[];
 }
