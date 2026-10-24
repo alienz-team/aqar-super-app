@@ -258,15 +258,18 @@ export const featuredProperties = [
   ...properties.filter((p) => p.isVip && !featuredIds.includes(p.id)),
 ];
 
-/** Hero background stages, shown in this order. */
+// Hero photos are served at 4K width: the loader swaps in the width each screen needs.
+const hero = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=2000&q=90`;
+
+/** Hero background stages, shown in this order. Every photo was checked by eye: no people. */
 export const heroSlides: HeroSlide[] = [
-  { id: "villa", image: unsplash("1600585154340-be6161a56a0c") },
-  { id: "interior", image: unsplash("1600585154084-4e5fe7c39198") },
-  { id: "pools", image: unsplash("1542314831-068cd1dbfeeb") },
-  { id: "architecture", image: unsplash("1479839672679-a46483c0e7c8") },
-  { id: "construction", image: unsplash("1429497419816-9ca5cfb4571a") },
-  { id: "solar", image: unsplash("1611365892117-00ac5ef43c90") },
-  { id: "landscape", image: unsplash("1585320806297-9794b3e4eeae") },
+  { id: "villa", image: hero("1613490493576-7fde63acd811") },
+  { id: "pools", image: hero("1600596542815-ffad4c1539a9") },
+  { id: "landscape", image: hero("1600585154340-be6161a56a0c") },
+  { id: "interior", image: hero("1600607687939-ce8a6c25118c") },
+  { id: "architecture", image: hero("1600566753376-12c8ab7fb75b") },
+  { id: "resort", image: hero("1512917774080-9991f1c4c750") },
+  { id: "facade", image: hero("1600585154526-990dced4db0d") },
 ];
 
 /** Rotating photo sets for section introductions (3-4 each, crossfaded every 4 s). */
@@ -285,37 +288,37 @@ export const serviceSectors: ServiceSector[] = [
     id: "marketing",
     categories: [],
     mode: "browse",
-    images: photos("1613977257365-aaae5a9817ff", "1564501049412-61c2a3083791", "1512917774080-9991f1c4c750", "1600585154340-be6161a56a0c"),
+    images: photos("1600585154340-be6161a56a0c", "1600596542815-ffad4c1539a9", "1600607687939-ce8a6c25118c"),
   },
   {
     id: "contracting",
     categories: ["CONSTRUCTION_SKELETON", "CONSTRUCTION_FINISHING", "MAINTENANCE_ELECTRICAL", "MAINTENANCE_PLUMBING"],
     mode: "quote",
-    images: photos("1599707254554-027aeb4deacd", "1565008447742-97f6f38c985c", "1508450859948-4e04fabaa4ea", "1523217582562-09d0def993a6"),
+    images: photos("1599707254554-027aeb4deacd", "1508450859948-4e04fabaa4ea", "1565008447742-97f6f38c985c"),
   },
   {
     id: "interior",
     categories: ["DESIGN_3D"],
     mode: "quote",
-    images: photos("1618220179428-22790b461013", "1617806118233-18e1de247200", "1615529182904-14819c35db37", "1616486338812-3dadae4b4ace"),
+    images: photos("1618221195710-dd6b41faaea6", "1616486338812-3dadae4b4ace", "1600585154526-990dced4db0d"),
   },
   {
     id: "pools",
     categories: ["SWIMMING_POOL_LANDSCAPE", "MAINTENANCE_POOL"],
     mode: "quote",
-    images: photos("1571896349842-33c89424de2d", "1572331165267-854da2b10ccc", "1576013551627-0cc20b96c2a7", "1585320806297-9794b3e4eeae"),
+    images: photos("1576013551627-0cc20b96c2a7", "1572331165267-854da2b10ccc", "1512917774080-9991f1c4c750"),
   },
   {
     id: "security",
     categories: ["SMART_HOME_SECURITY"],
     mode: "quote",
-    images: photos("1557597774-9d273605dfa9", "1585128792020-803d29415281", "1600494603989-9650cf6ddd3d"),
+    images: photos("1557597774-9d273605dfa9", "1582139329536-e7284fece509", "1590856029826-c7a73142bbf1"),
   },
   {
     id: "smartHome",
     categories: ["SMART_HOME_SECURITY"],
     mode: "quote",
-    images: photos("1617104678098-de229db51175", "1615874959474-d609969a20ed", "1616137466211-f939a420be84"),
+    images: photos("1513694203232-719a280e022f", "1618219908412-a29a1bb7b86e", "1617104678098-de229db51175"),
   },
 ];
 

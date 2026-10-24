@@ -30,13 +30,13 @@ export function HomeView() {
                 as="h1"
                 immediate
                 text={`${t.hero.titleLead} ${t.hero.titleAccent}`}
-                className="text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-6xl lg:text-7xl rtl:leading-[1.25] rtl:tracking-normal"
+                className="text-[2.6rem] font-semibold leading-[1.05] [text-shadow:0_2px_28px_rgb(0_0_0/0.45)] tracking-[-0.035em] text-white sm:text-6xl lg:text-7xl rtl:leading-[1.25] rtl:tracking-normal"
               />
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1.2, delay: 0.8, ease: SLOW_EASE }}
-                className="mt-6 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg"
+                className="mt-6 max-w-xl text-base leading-relaxed text-white/85 [text-shadow:0_1px_16px_rgb(0_0_0/0.5)] sm:text-lg"
               >
                 {t.hero.subtitle}
               </motion.p>

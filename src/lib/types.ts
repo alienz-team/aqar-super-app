@@ -52,7 +52,7 @@ export interface ServiceSector {
   images: string[];
 }
 
-export type HeroSlideId = "villa" | "interior" | "pools" | "architecture" | "construction" | "solar" | "landscape";
+export type HeroSlideId = "villa" | "pools" | "landscape" | "interior" | "architecture" | "resort" | "facade";
 
 export interface HeroSlide {
   id: HeroSlideId;

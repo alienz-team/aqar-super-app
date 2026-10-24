@@ -45,9 +45,9 @@
       "interior": "Interior & 3D design",
       "pools": "Pools & resorts",
       "architecture": "Contemporary architecture",
-      "construction": "Construction",
-      "solar": "Solar & clean energy",
-      "landscape": "Gardens & landscaping"
+      "landscape": "Gardens & landscaping",
+      "resort": "Resort-style living",
+      "facade": "Glass and timber facades"
     }
   },
   "home": {

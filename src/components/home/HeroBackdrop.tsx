@@ -9,7 +9,8 @@ import { heroSlides } from "@/lib/mock-data";
 import { unsplashLoader } from "@/lib/unsplash-loader";
 import { cn, formatNumber } from "@/lib/utils";
 
-const INTERVAL_MS = 3000;
+// Matches the 6 s Ken Burns settle in globals.css, so each photo finishes its zoom before the next fades in.
+const INTERVAL_MS = 6000;
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
 
 function subscribeReducedMotion(onChange: () => void) {
@@ -28,7 +29,7 @@ export function HeroBackdrop() {
     () => false,
   );
 
-  // Re-arms after every change, so picking a slide restarts the 3 s countdown.
+  // Re-arms after every change, so picking a slide restarts the 6 s countdown.
   useEffect(() => {
     if (reducedMotion) return;
     const id = window.setTimeout(() => setActive((i) => (i + 1) % heroSlides.length), INTERVAL_MS);
@@ -47,16 +48,18 @@ export function HeroBackdrop() {
             alt=""
             fill
             sizes="100vw"
+            quality={90}
             priority={i === 0}
             loader={unsplashLoader}
             className={cn(
-              "object-cover transition-[opacity,transform] duration-[1400ms] ease-out",
-              i === active ? "scale-100 opacity-100" : "scale-[1.03] opacity-0",
+              "object-cover transition-opacity duration-[1400ms] ease-out",
+              // Re-applying .kenburns on each activation restarts the zoom from 105%.
+              i === active ? "kenburns opacity-100" : "scale-105 opacity-0",
             )}
           />
         ))}
-        {/* Heavier toward the bottom, where the headline and search bar sit. */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/0.88),rgb(0_0_0/0.35)_55%,rgb(0_0_0/0.5))]" />
+        {/* Light veil: darkest where the headline and search bar sit, nearly clear above so the photo stays vivid. */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/0.72),rgb(0_0_0/0.38)_35%,rgb(0_0_0/0.06)_65%,rgb(0_0_0/0.2))]" />
       </div>
 
       <div className="w-full text-white lg:w-72" role="group" aria-label={t.hero.slidesLabel}>
@@ -79,7 +82,7 @@ export function HeroBackdrop() {
               <span className="relative block h-0.5 w-full overflow-hidden bg-white/25 transition-colors group-hover:bg-white/45">
                 {i < active && <span className="absolute inset-0 bg-white/70" />}
                 {i === active && (
-                  // Fills over the slide's 3 s so the countdown is visible.
+                  // Fills over the slide's 6 s so the countdown is visible.
                   <motion.span
                     key={`${active}-${reducedMotion}`}
                     className="absolute inset-0 origin-left bg-gold rtl:origin-right"
