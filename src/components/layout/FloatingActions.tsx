@@ -26,9 +26,9 @@ export function FloatingActions() {
     window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
   }
 
-  // Sits above the mobile tab bar (about 4.5rem tall) and drops to the corner on desktop.
+  // Mobile: clears the dock (action bar + tab bar) and leaves WhatsApp to the action bar. Desktop: corner.
   return (
-    <div className="fixed bottom-24 end-4 z-30 flex flex-col items-center gap-3 md:bottom-6">
+    <div className="fixed bottom-44 end-4 z-30 flex flex-col items-center gap-3 md:bottom-6">
       <button
         type="button"
         onClick={toTop}
@@ -46,7 +46,7 @@ export function FloatingActions() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={t.contact.chatWhatsapp}
-        className="flex size-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105"
+        className="hidden size-14 items-center justify-center rounded-full bg-[#25D366] md:flex text-white shadow-lg transition-transform hover:scale-105"
       >
         <WhatsAppIcon className="size-7" />
       </a>

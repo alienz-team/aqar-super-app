@@ -21,3 +21,10 @@ export function whatsappUrl(message?: string) {
   const base = `https://wa.me/${contact.whatsappNumber}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
+
+/** Pre-filled enquiry about one listing. Always Arabic: the Aqaar team reads and answers in Arabic. */
+export function propertyWhatsappUrl(property: { id: string; title: { ar: string } }) {
+  return whatsappUrl(`أهلاً فريق عقار، أنا مهتم بمعاينة والاستفسار عن العقار: ${property.title.ar} (كود: ${property.id})`);
+}
+
+export const generalWhatsappUrl = whatsappUrl("أهلاً فريق عقار، أود الاستفسار عن خدماتكم وعروضكم العقارية");

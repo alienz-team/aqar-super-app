@@ -8,7 +8,7 @@ import { Modal } from "@/components/ui/Modal";
 import { WhatsAppIcon } from "@/components/ui/brand-icons";
 import { buttonStyles } from "@/components/ui/primitives";
 import { interpolate } from "@/dictionaries";
-import { telUrl, whatsappUrl } from "@/lib/contact";
+import { propertyWhatsappUrl, telUrl } from "@/lib/contact";
 import type { PropertyListing } from "@/lib/types";
 import { unsplashLoader } from "@/lib/unsplash-loader";
 import { cn, formatNumber, formatPrice } from "@/lib/utils";
@@ -142,7 +142,7 @@ function QuickViewBody({ property: p, onAction }: { property: PropertyListing; o
           </button>
           <div className="grid grid-cols-2 gap-2">
             <a
-              href={whatsappUrl(interpolate(t.property.whatsappMessage, { name: p.title[lang] }))}
+              href={propertyWhatsappUrl(p)}
               target="_blank"
               rel="noopener noreferrer"
               className={buttonStyles.secondary}

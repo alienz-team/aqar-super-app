@@ -2,7 +2,9 @@
 
 import { Crown, Eye, MapPin } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { WhatsAppIcon } from "@/components/ui/brand-icons";
 import { buttonStyles } from "@/components/ui/primitives";
+import { propertyWhatsappUrl } from "@/lib/contact";
 import type { PropertyListing } from "@/lib/types";
 import { cn, formatNumber, formatPrice } from "@/lib/utils";
 import { PropertyVisual } from "./PropertyVisual";
@@ -83,13 +85,24 @@ export function PropertyCard({ property: p, onAction, onQuickView }: PropertyCar
             <span className="text-xl font-semibold tracking-tight text-gold-text">{formatPrice(p.price, lang)}</span>
             {isRent && <span className="ms-1 text-sm text-muted">{t.property.perCycle[p.rentCycle]}</span>}
           </p>
-          <button
-            type="button"
-            onClick={() => onAction(p)}
-            className={cn(isRent ? buttonStyles.gold : buttonStyles.secondary, "shrink-0 px-4 py-2")}
-          >
-            {isRent ? t.property.bookNow : t.property.requestViewing}
-          </button>
+          <div className="flex shrink-0 items-center gap-2">
+            <a
+              href={propertyWhatsappUrl(p)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${t.property.askWhatsapp}: ${p.title[lang]}`}
+              className={cn(buttonStyles.secondary, "size-10 p-0 text-[#1fa855] hover:border-[#25D366]")}
+            >
+              <WhatsAppIcon className="size-5" />
+            </a>
+            <button
+              type="button"
+              onClick={() => onAction(p)}
+              className={cn(isRent ? buttonStyles.gold : buttonStyles.secondary, "px-4 py-2")}
+            >
+              {isRent ? t.property.bookNow : t.property.requestViewing}
+            </button>
+          </div>
         </div>
       </div>
     </article>

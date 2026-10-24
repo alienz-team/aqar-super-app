@@ -91,7 +91,6 @@
     "showPhoto": "اعرض الصورة {n}",
     "askWhatsapp": "اسأل عبر واتساب",
     "callUs": "اتصل بنا",
-    "whatsappMessage": "مرحباً عقار، أنا مهتم بـ: {name}",
     "details": "التفاصيل"
   },
   "categories": {
@@ -351,5 +350,11 @@
     "instagram": "إنستغرام",
     "backToTop": "العودة للأعلى",
     "chatWhatsapp": "تحدث معنا عبر واتساب"
+  },
+  "mobileBar": {
+    "label": "إجراءات سريعة",
+    "call": "اتصال",
+    "whatsapp": "واتساب",
+    "browse": "العقارات"
   }
 }

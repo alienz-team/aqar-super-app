@@ -13,7 +13,7 @@ export function MobileNav() {
   return (
     <nav
       aria-label={t.nav.main}
-      className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/95 backdrop-blur-md md:hidden"
+      className="border-t border-line bg-bg/95 backdrop-blur-md"
     >
       <ul className="grid grid-cols-4">
         {navItems.map(({ href, mobileKey, icon: Icon }) => {

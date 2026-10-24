@@ -91,7 +91,6 @@
     "showPhoto": "Show photo {n}",
     "askWhatsapp": "Ask on WhatsApp",
     "callUs": "Call us",
-    "whatsappMessage": "Hello Aqaar, I am interested in: {name}",
     "details": "Details"
   },
   "categories": {
@@ -351,5 +350,11 @@
     "instagram": "Instagram",
     "backToTop": "Back to top",
     "chatWhatsapp": "Chat on WhatsApp"
+  },
+  "mobileBar": {
+    "label": "Quick actions",
+    "call": "Call",
+    "whatsapp": "WhatsApp",
+    "browse": "Properties"
   }
 }
